@@ -6,25 +6,36 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Document</title>
     <script>
-      const uploadFile = function() {
-        var blobFile = document.getElementById("myfile").files[0];
-        var formData = new FormData();
-        formData.append("fileToUpload", blobFile);
+      const getFileName = name =>
+        new RegExp("(.+?)(?:.[^.]*$|$)").exec(name)[1];
 
-        fetch("/uploadimage", {
+      const uploadFile = function() {
+        var blobFile = document.getElementById("myFile").files[0];
+        const filename = getFileName(blobFile.name);
+        var formData = new FormData();
+        formData.append("myFile", blobFile);
+
+        fetch("/convertto", {
           method: "POST",
-          data: formData
-        });
+          body: formData
+        })
+          .then(response => response.blob())
+          .then(blob => {
+            var url = window.URL.createObjectURL(blob);
+            var a = document.createElement("a");
+            a.href = url;
+            a.download = filename+'.webp';
+            document.body.appendChild(a); // we need to append the element to the dom -> otherwise it will not work in firefox
+            a.click();
+            a.remove(); //afterwards we remove the element again
+          });
       };
     </script>
   </head>
   <body>
     <label for="myfile">Select a file:</label>
-    <form action="/convertto" enctype="multipart/form-data" method="POST">
-      <input type="file" name="myFile" />
-      <input type="submit" value="Upload a file" />
-    </form>
+    <input type="file" id="myFile" name="myFile" />
+    <button onclick="uploadFile()">Upload</button>
     <br />
-    <!-- <button onclick="uploadFile()">Upload</button> -->
   </body>
 </html>

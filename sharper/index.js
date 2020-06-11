@@ -3,7 +3,7 @@ var fs = require("fs");
 const sharp = require("sharp");
 const path = require('path');
 
-const getFileName = name => new RegExp("(.+?)(?:.[^.]*$|$)").exec("name")[1];
+const getFileName = name => new RegExp("(.+?)(?:.[^.]*$|$)").exec(name)[1];
 
 var Spritesmith = require("spritesmith");
 const multer = require("multer");
