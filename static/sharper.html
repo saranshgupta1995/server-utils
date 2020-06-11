@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <script>
+      const uploadFile = function() {
+        var blobFile = document.getElementById("myfile").files[0];
+        var formData = new FormData();
+        formData.append("fileToUpload", blobFile);
+
+        fetch("/uploadimage", {
+          method: "POST",
+          data: formData
+        });
+      };
+    </script>
+  </head>
+  <body>
+    <label for="myfile">Select a file:</label>
+    <form action="/convertto" enctype="multipart/form-data" method="POST">
+      <input type="file" name="myFile" />
+      <input type="submit" value="Upload a file" />
+    </form>
+    <br />
+    <!-- <button onclick="uploadFile()">Upload</button> -->
+  </body>
+</html>
