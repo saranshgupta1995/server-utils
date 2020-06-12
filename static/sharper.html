@@ -14,10 +14,11 @@
         const filename = getFileName(blobFile.name);
         var formData = new FormData();
         formData.append("myFile", blobFile);
+        formData.append("fileType", 'webp');
 
         fetch("/convertto", {
           method: "POST",
-          body: formData
+          body: formData,
         })
           .then(response => response.blob())
           .then(blob => {

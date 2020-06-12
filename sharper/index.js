@@ -42,6 +42,10 @@ router.get("/sheet", (req, res) => {
   });
 });
 
+const conversionSteps = {
+  webp:()=>{}
+}
+
 router.post("/convertto", upload.single("myFile"), (req, res) => {
   const filename = req.file.originalname;
   const justTheName = getFileName(filename);
