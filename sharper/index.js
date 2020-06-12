@@ -45,9 +45,7 @@ router.get("/sheet", (req, res) => {
 router.post("/convertto", upload.single("myFile"), (req, res) => {
   const filename = req.file.originalname;
   const justTheName = getFileName(filename);
-  console.log(justTheName);
   sharp(filename)
-    .extract({ left: 0, top: 0, width: 508, height: 470 })
     .webp({ lossless: false })
     .toFile(justTheName + ".webp")
     .then(function(info) {
